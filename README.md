@@ -28,6 +28,8 @@
 - **[Modello STEP](./hardware/cad/A5ive_pick_and_place.step):** l'assieme completo da aprire in qualsiasi CAD (Fusion, FreeCAD, SolidWorks, Inventor).
 - **[Modello STL](./hardware/cad/A5ive_pick_and_place.stl):** si apre nel visualizzatore 3D di GitHub, dove si può ruotare e ingrandire.
 - **Sorgente Fusion:** progetto cloud *Pick and Place A5*, documento *Pick and Place A5*.
+- **[Modello FreeCAD parametrico](./hardware/cad/A5ive_pick_and_place.FCStd):** lo stesso modello ricostruito da zero in FreeCAD 1.1 con PartDesign. Tutte le quote sono nel foglio *Parametri*: cambiando un valore (area di lavoro, margini, lamiera, rotaie…) il modello si aggiorna. Con `carrello_x` e `carrello_y` gli assi si muovono lungo la corsa.
+- **[Generatore FreeCAD](./hardware/freecad/):** gli script che ricreano il modello da zero. In FreeCAD si lancia `genera_a5ive.py` da *Macro → Macro…*.
 
 > Il progetto è in corso. Sono pronti telaio, asse Y e asse X. Mancano ancora testa con asse Z, ugello, telecamere e feeder.
 
@@ -96,8 +98,9 @@ Le quote sono misurate dal centro dell'area A5, che coincide con il centro del t
 
 ```text
 ├── hardware/
-│   ├── cad/    # Modello 3D esportato da Fusion (STEP e STL)
-│   └── img/    # Viste del modello
+│   ├── cad/      # Modello 3D: STEP e STL da Fusion, FCStd parametrico FreeCAD
+│   ├── freecad/  # Script che rigenerano il modello FreeCAD da zero
+│   └── img/      # Viste del modello
 ├── logo.svg    # Banner del progetto
 └── LICENSE
 ```
