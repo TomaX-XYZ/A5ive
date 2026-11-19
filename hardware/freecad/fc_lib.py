@@ -7,7 +7,8 @@ V = App.Vector
 SHEET = 'Parametri'
 COL = {'alu': (0.76, 0.77, 0.79), 'blu': (0.18, 0.36, 0.62), 'rail': (0.63, 0.65, 0.67), 'carr': (0.42, 0.43, 0.45),
        'green': (0.15, 0.55, 0.25), 'red': (0.72, 0.16, 0.12), 'motor': (0.12, 0.12, 0.13), 'brass': (0.82, 0.63, 0.25),
-       'steel': (0.70, 0.72, 0.74), 'a5': (0.16, 0.32, 0.58)}
+       'steel': (0.70, 0.72, 0.74), 'a5': (0.16, 0.32, 0.58), 'led': (0.94, 0.94, 0.88),
+       'glass': (0.08, 0.12, 0.18), 'tray': (0.17, 0.17, 0.18), 'pcb': (0.10, 0.36, 0.16)}
 
 
 def doc():
@@ -211,7 +212,9 @@ def slot2040():
 
 
 # ---------------------------------------------------------------- colori finali
-RULES = [('Zona', 'a5'), ('Rotaia', 'rail'), ('Corpo acciaio', 'carr'), ('Testate', 'green'), ('Tenute', 'red'),
+RULES = [('albero cavo', 'motor'), ('Anello LED', 'led'), ('Obiettivo', 'glass'), ('Vassoio', 'tray'), ('Scheda', 'pcb'),
+         ('Ugello', 'steel'), ('Adattatore', 'steel'), ('Giunto rotante', 'brass'), ('Pattino MGN7', 'carr'),
+         ('Braccio', 'blu'), ('Zona', 'a5'), ('Rotaia', 'rail'), ('Corpo acciaio', 'carr'), ('Testate', 'green'), ('Tenute', 'red'),
          ('albero', 'steel'), ('Motore', 'motor'), ('Chiocciola', 'brass'), ('Asta', 'steel'), ('Vite', 'steel'),
          ('Staffa', 'blu'), ('Supporto', 'blu'), ('Piastra', 'blu'), ('Ponte', 'blu'), ('Testata', 'blu')]
 
@@ -229,3 +232,13 @@ def colorize(d):
                     paint(f, c)
                 except Exception:
                     pass
+
+
+def cone(body, label, cx, cy, z0, r_bottom, r_top, h):
+    """Cono additivo verticale con base a quota z0 (espressioni)."""
+    f = body.newObject('PartDesign::AdditiveCone', 'Cone')
+    f.Label = label
+    f.Radius1 = ev(r_bottom); f.Radius2 = ev(r_top); f.Height = ev(h)
+    set_expr(f, 'Radius1', r_bottom); set_expr(f, 'Radius2', r_top); set_expr(f, 'Height', h)
+    set_expr(f, '.Placement.Base.x', cx); set_expr(f, '.Placement.Base.y', cy); set_expr(f, '.Placement.Base.z', z0)
+    return f

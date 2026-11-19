@@ -57,6 +57,25 @@ PARAMS = [
     ('z_ponte', '=z_st + 46', 'Fondo piastra superiore ponte'),
     ('x_cp1', '=x_e - 1', 'Retro giunto X'),
     ('x_cp0', '=x_cp1 - 25', 'Fronte giunto X'),
+    ('--', '', 'TESTA DI PIAZZAMENTO'),
+    ('corsa_z', '25', 'Corsa asse Z'),
+    ('z_punta', '=altezza_bordo + corsa_z + 2', 'Quota punta ugello a riposo (Z in alto)'),
+    ('y_ponte_fronte', '-19', 'Faccia anteriore del ponte X'),
+    ('sp_piastra_testa', '5', 'Spessore piastra testa'),
+    ('y_rot_z', '=y_ponte_fronte - sp_piastra_testa', 'Faccia di appoggio rotaia MGN7 Z'),
+    ('y_pz', '=y_rot_z - 8', 'Faccia anteriore pattino MGN7H Z'),
+    ('y_noz', '=y_pz - 4 - 10', 'Asse ugello rispetto al gantry (Y)'),
+    ('cam_dx', '-28', 'Telecamera verso il basso: scostamento X dall ugello'),
+    ('nema8_l', '30', 'Lunghezza NEMA8 albero cavo (da verificare sul pezzo)'),
+    ('--', '', 'PARTE FRONTALE'),
+    ('a5_y_centro', '-35', 'Centro area A5 (spostata in avanti)'),
+    ('cella', '19', 'Scomparto vassoio (lato)'),
+    ('parete_vassoio', '1.5', 'Parete tra gli scomparti'),
+    ('vassoio_h', '10', 'Altezza vassoio'),
+    ('vassoio_x', '-20', 'Centro vassoio X'),
+    ('vassoio_y', '-140', 'Centro vassoio Y'),
+    ('cam_basso_x', '90', 'Telecamera dal basso: centro X (lontana dal pattino Y destro)'),
+    ('cam_basso_y', '-140', 'Telecamera dal basso: centro Y'),
     ('--', '', 'CORSE E POSIZIONE ATTUALE'),
     ('corsa_y_min', '=(y_front + 16.5) > (rotaia_y_centro - (lunghezza_rotaia - car_l)/2) ? (y_front + 16.5) : (rotaia_y_centro - (lunghezza_rotaia - car_l)/2)', 'Minimo centro carrello Y'),
     ('corsa_y_max', '=(y_cp0 - 13) < (rotaia_y_centro + (lunghezza_rotaia - car_l)/2) ? (y_cp0 - 13) : (rotaia_y_centro + (lunghezza_rotaia - car_l)/2)', 'Massimo centro carrello Y'),
@@ -64,6 +83,7 @@ PARAMS = [
     ('corsa_x_max', '=(x_cp0 - 11) < ((lunghezza_rotaia_x - car_l)/2) ? (x_cp0 - 11) : ((lunghezza_rotaia_x - car_l)/2)', 'Massimo centro pattino X'),
     ('carrello_y', '0', 'POSIZIONE gantry Y (cambiala per muoverlo)'),
     ('carrello_x', '0', 'POSIZIONE pattino X (cambiala per muoverlo)'),
+    ('z_nozzle', '0', 'POSIZIONE asse Z: 0 = in alto, fino a corsa_z'),
 ]
 
 
@@ -161,7 +181,7 @@ def build(L):
     # ---------------- Zona di lavoro A5 (segno colorato 0,1 mm sul piano)
     b = L.mkbody(root, 'Zona di lavoro A5', 'a5')
     sk = L.sketch(b, 'Area A5', 'XY', off='{altezza_bordo}')
-    L.rect(sk, '-{area_x}/2', '-{area_y}/2', '{area_x}/2', '{area_y}/2')
+    L.rect(sk, '-{area_x}/2', '{a5_y_centro} - {area_y}/2', '{area_x}/2', '{a5_y_centro} + {area_y}/2')
     L.pad(b, sk, '0.1', 'Segno A5')
     d.recompute()
     return root

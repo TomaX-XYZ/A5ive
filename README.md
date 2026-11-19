@@ -25,13 +25,20 @@
 | :---: | :---: |
 | <img src="./hardware/img/vista_posteriore.png" alt="Vista posteriore" width="100%" /> | <img src="./hardware/img/vista_sotto.png" alt="Vista da sotto" width="100%" /> |
 
-- **[Modello STEP](./hardware/cad/A5ive_pick_and_place.step):** l'assieme completo da aprire in qualsiasi CAD (Fusion, FreeCAD, SolidWorks, Inventor).
-- **[Modello STL](./hardware/cad/A5ive_pick_and_place.stl):** si apre nel visualizzatore 3D di GitHub, dove si può ruotare e ingrandire.
-- **Sorgente Fusion:** progetto cloud *Pick and Place A5*, documento *Pick and Place A5*.
-- **[Modello FreeCAD parametrico](./hardware/cad/A5ive_pick_and_place.FCStd):** lo stesso modello ricostruito da zero in FreeCAD 1.1 con PartDesign. Tutte le quote sono nel foglio *Parametri*: cambiando un valore (area di lavoro, margini, lamiera, rotaie…) il modello si aggiorna. Con `carrello_x` e `carrello_y` gli assi si muovono lungo la corsa.
-- **[Generatore FreeCAD](./hardware/freecad/):** gli script che ricreano il modello da zero. In FreeCAD si lancia `genera_a5ive.py` da *Macro → Macro…*.
+| Testa di piazzamento (FreeCAD) | Parte frontale: vassoio e telecamera dal basso (FreeCAD) |
+| :---: | :---: |
+| <img src="./hardware/img/testa_freecad.png" alt="Testa con asse Z, nozzle rotante e telecamera" width="100%" /> | <img src="./hardware/img/fronte_freecad.png" alt="Vassoio 16 scomparti e telecamera dal basso" width="100%" /> |
 
-> Il progetto è in corso. Sono pronti telaio, asse Y e asse X. Mancano ancora testa con asse Z, ugello, telecamere e feeder.
+- **[Modello FreeCAD parametrico](./hardware/cad/A5ive_pick_and_place.FCStd):** il modello di riferimento, costruito da zero in FreeCAD 1.1 con PartDesign e già comprensivo di testa e parte frontale. Tutte le quote sono nel foglio *Parametri*: cambiando un valore (area di lavoro, margini, lamiera, rotaie…) il modello si aggiorna. Con `carrello_x`, `carrello_y` e `z_nozzle` gli assi si muovono lungo la corsa.
+- **[Generatore FreeCAD](./hardware/freecad/):** gli script che ricreano il modello da zero. In FreeCAD si lancia `genera_a5ive.py` da *Macro → Macro…*.
+- **[Modello STEP](./hardware/cad/A5ive_pick_and_place.step) e [STL](./hardware/cad/A5ive_pick_and_place.stl):** esportati da Fusion, contengono telaio, asse Y e asse X ma **non ancora la testa né la parte frontale**. Lo STL si apre nel visualizzatore 3D di GitHub.
+- **Sorgente Fusion:** progetto cloud *Pick and Place A5*, documento *Pick and Place A5* (fermo a prima della testa).
+
+> Il progetto è in corso. Sono pronti telaio, asse Y, asse X, testa con asse Z, nozzle rotante e telecamere, vassoio per componenti sfusi. Mancano ancora feeder a nastro, impianto del vuoto e passaggio dei cavi.
+
+## Promemoria acquisti
+
+- **Kit testina SMT per il nozzle:** [motore NEMA8/NEMA11 ad albero cavo con ugello Juki e raccordo girevole KSH04-M5 (AliExpress)](https://it.aliexpress.com/item/1005004594670502.html). È il componente scelto per la rotazione a 360° del nozzle; nel modello è la versione **NEMA8**. Le misure del motore (`nema8_l` nel foglio Parametri) vanno verificate sul pezzo arrivato.
 
 ## Parti meccaniche da acquistare
 
@@ -51,6 +58,14 @@ Quantità e misure prese dal modello 3D.
 | 10 | Barra tonda acciaio | Ø 10 mm, **L = 288 mm** | 1 | Asta che unisce i due pattini Y sotto il piano |
 | 11 | Dadi a T | M3 per cava 6 | 15 | Rotaia X e fissaggio profilo sulle staffe |
 | 12 | Viteria | M3 (rotaie, pattini, motori), M5 (testate profilo) | — | Tutta la macchina |
+| 13 | Kit testina SMT | NEMA8 ad albero cavo + adattatore ugelli Juki + raccordo girevole KSH04-M5 ([link](https://it.aliexpress.com/item/1005004594670502.html)) | 1 | Rotazione del nozzle a 360° |
+| 14 | Ugelli | Juki serie 500, set di misure per 0402 … QFP | 1 set | Sotto il motore ad albero cavo |
+| 15 | Motore passo-passo lineare | NEMA8 con vite T4 integrata e chiocciola | 1 | Asse Z, in cima alla testa |
+| 16 | Rotaia guida lineare | MGN7, **L = 70 mm** | 1 | Asse Z, verticale sulla piastra testa |
+| 17 | Pattino a ricircolo di sfere | MGN7H, 17 × 30,8 mm | 1 | Asse Z |
+| 18 | Telecamera USB | Scheda 25 × 25 mm con obiettivo M12 | 2 | Testa (verso il basso) e fronte (dal basso) |
+| 19 | Anello LED | Ø 30–32 mm, foro Ø 16–18 mm | 2 | Intorno ai due obiettivi |
+| 20 | Tubo pneumatico | Ø 4 mm | — | Dal raccordo girevole all'impianto del vuoto |
 
 ### Parti da realizzare
 
@@ -62,6 +77,11 @@ Quantità e misure prese dal modello 3D.
 | Supporto anteriore vite Y e piastra motore Y | Alluminio | 2 |
 | Testate profilo X (lato cuscinetto e lato motore) | Alluminio 5 mm | 2 |
 | Ponte pattino X → chiocciola (scavalca il profilo) | Alluminio | 1 |
+| Piastra testa e mensola del motore Z | Alluminio 5 mm / 4 mm | 2 |
+| Supporto Z: piastra sul pattino, mensola del motore rotante, orecchio della chiocciola | Alluminio 4 mm | 1 |
+| Braccio della telecamera verso il basso | Alluminio 4 mm | 1 |
+| Vassoio 16 scomparti (2 × 8, 19 × 19 mm) | Stampa 3D, materiale antistatico | 1 |
+| Supporto della telecamera dal basso | Alluminio o stampa 3D | 1 |
 
 ## Scelte di progetto
 
@@ -72,6 +92,11 @@ Quantità e misure prese dal modello 3D.
 - **Meccanica Y nascosta nel telaio.** Il telaio è in lamiera piegata due volte, quindi senza bordi taglienti, e alto 60 mm. Dentro ci stanno vite, chiocciola, asta e motore Y, protetti dalla polvere e dai componenti che cadono.
 - **Gantry X rigido e basso.** Il profilo 2040 è in piedi, la rotaia sta sulla faccia anteriore e la vite dietro al profilo. Un ponte che scavalca il profilo collega il pattino alla chiocciola. Il motore X è sul lato destro.
 - **Si accetta una corsa un po' più corta** per evitare le cinghie, ma l'area A5 resta coperta tutta.
+- **Nozzle più piccolo possibile, che gira a 360°.** Motore NEMA8 ad albero cavo: il vuoto passa dentro l'albero e un raccordo girevole KSH04-M5 in cima permette giri infiniti senza attorcigliare il tubo. Sotto c'è direttamente l'ugello Juki, senza ingranaggi né cinghie.
+- **Asse Z a vite, come X e Y.** Un NEMA8 lineare con vite T4 muove un pattino MGN7H su una mini guida MGN7: 25 mm di corsa, senza gioco.
+- **Telecamera verso il basso solidale alla testa.** È fissata alla piastra della testa, accanto al nozzle: si muove con lui in X e Y ma non sale e scende con lo Z, così resta sempre a fuoco sul piano. Ha un anello LED intorno all'obiettivo.
+- **Parte frontale per i componenti sfusi.** Davanti all'area A5 ci sono un vassoio da 16 scomparti e la telecamera dal basso con anello LED, che controlla posizione e rotazione del componente preso dal nozzle.
+- **Area A5 spostata in avanti di 35 mm.** Il nozzle sta davanti alla traversa X: spostando l'area A5 (parametro `a5_y_centro`) il nozzle la raggiunge tutta senza allungare il telaio.
 
 ## Specifiche
 
@@ -79,9 +104,11 @@ Quantità e misure prese dal modello 3D.
 | :--- | :--- |
 | **Area di lavoro** | 210 × 148 mm (formato A5) |
 | **Ingombro base** | 310 × 348 × 60 mm (gantry escluso) |
-| **Corsa Y** | 230,5 mm (−143,5 … +87 mm dal centro dell'A5) |
-| **Corsa X** | 219,3 mm (−112,3 … +107 mm dal centro dell'A5) |
-| **Corsa Z** | 25 mm (da progettare) |
+| **Corsa Y** | 230,5 mm (gantry da −143,5 a +87 mm dal centro del telaio) |
+| **Corsa X** | 219,3 mm (pattino da −112,3 a +107 mm dal centro del telaio) |
+| **Corsa Z** | 25 mm, NEMA8 lineare con vite T4 su guida MGN7 |
+| **Rotazione nozzle** | 360° continua, NEMA8 ad albero cavo con raccordo girevole KSH04-M5 |
+| **Telecamere** | Una sulla testa (verso il basso) e una sul fronte (dal basso), entrambe con anello LED |
 | **Trasmissione** | Viti T8x8 in presa diretta, nessuna cinghia |
 | **Guide** | MGN12 con pattini MGN12H |
 | **Risoluzione teorica** | 0,0025 mm/micropasso (NEMA17 1,8°, 1/16 di micropasso, passo 8 mm) |
@@ -92,7 +119,17 @@ Quantità e misure prese dal modello 3D.
 
 ### Area di lavoro e corse
 
-Le quote sono misurate dal centro dell'area A5, che coincide con il centro del telaio. L'area A5 va da −105 a +105 mm in X e da −74 a +74 mm in Y. In Y ci sono quasi 70 mm di corsa in più verso il davanti, dove andranno i feeder.
+Le quote sono misurate dal centro del telaio; Y positivo va verso il retro.
+
+| Zona | X [mm] | Y [mm] |
+| :--- | :--- | :--- |
+| Area A5 (spostata in avanti di 35 mm) | −105 … +105 | −109 … +39 |
+| Raggiunta dal nozzle | −112,3 … +107 | −189,5 … +41 |
+| Vista dalla telecamera sulla testa (28 mm a sinistra del nozzle) | −140,3 … +79 | −189,5 … +41 |
+| Vassoio 16 scomparti | −102,8 … +62,8 | −161,3 … −118,8 |
+| Telecamera dal basso | +73 … +107 | −157 … −123 |
+
+Il nozzle raggiunge tutta l'area A5, il vassoio e la telecamera dal basso. La telecamera sulla testa non vede la striscia destra dell'A5 (da X = +79 a +105): conviene mettere i riferimenti del PCB (fiducial) nella parte sinistra, oppure spostare la telecamera con il parametro `cam_dx`.
 
 ## Struttura del repository
 
