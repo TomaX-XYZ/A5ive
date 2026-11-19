@@ -78,7 +78,7 @@
 
     <!-- Subtitle -->
     <text x="2" y="75" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="600" fill="#cbd5e1" letter-spacing="2">
-      PICK &amp; PLACE SYSTEM
+      SISTEMA PICK &amp; PLACE
     </text>
 
     <!-- Divider -->
@@ -86,7 +86,7 @@
 
     <!-- Slogan -->
     <text x="2" y="128" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="400" fill="#94a3b8">
-      Big precision, A5-sized working area.
+      Grande precisione, area di lavoro A5.
     </text>
   </g>
 </svg>
