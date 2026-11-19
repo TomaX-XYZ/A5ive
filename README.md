@@ -31,10 +31,37 @@
 
 - **[Modello FreeCAD parametrico](./hardware/cad/A5ive_pick_and_place.FCStd):** il modello di riferimento, costruito da zero in FreeCAD 1.1 con PartDesign e già comprensivo di testa e parte frontale. Tutte le quote sono nel foglio *Parametri*: cambiando un valore (area di lavoro, margini, lamiera, rotaie…) il modello si aggiorna. Con `carrello_x`, `carrello_y` e `z_nozzle` gli assi si muovono lungo la corsa.
 - **[Generatore FreeCAD](./hardware/freecad/):** gli script che ricreano il modello da zero. In FreeCAD si lancia `genera_a5ive.py` da *Macro → Macro…*.
-- **[Modello STEP](./hardware/cad/A5ive_pick_and_place.step) e [STL](./hardware/cad/A5ive_pick_and_place.stl):** esportati da Fusion, contengono telaio, asse Y e asse X ma **non ancora la testa né la parte frontale**. Lo STL si apre nel visualizzatore 3D di GitHub.
-- **Sorgente Fusion:** progetto cloud *Pick and Place A5*, documento *Pick and Place A5* (fermo a prima della testa).
+- **[Modello STEP](./hardware/cad/A5ive_pick_and_place.step) e [STL](./hardware/cad/A5ive_pick_and_place.stl):** esportati dal modello FreeCAD, comprendono testa, parte frontale e la bozza del passaggio cavi. Lo STL si apre nel visualizzatore 3D di GitHub.
+- **Sorgente Fusion:** progetto cloud *Pick and Place A5*, documento *Pick and Place A5* (fermo a prima della testa; il modello di riferimento ora è quello FreeCAD).
 
-> Il progetto è in corso. Sono pronti telaio, asse Y, asse X, testa con asse Z, nozzle rotante e telecamere, vassoio per componenti sfusi. Mancano ancora feeder a nastro, impianto del vuoto e passaggio dei cavi.
+> Il progetto è in corso. Sono pronti telaio, asse Y, asse X, testa con asse Z, nozzle rotante e telecamere, vassoio per componenti sfusi e una bozza del passaggio di cavi e tubo del vuoto. Mancano ancora i feeder a nastro.
+
+### Passaggio cavi e tubo del vuoto (bozza)
+
+L'obiettivo è non avere catene portacavi a vista: tutti i cavi e il tubo corrono dentro canali e carter. Sulla testa **non c'è nessuna scheda**: ogni cavo esce così com'è dal suo componente (motore Z, motore di rotazione, telecamera USB, anello LED) insieme al tubo del vuoto da 4 mm.
+
+| Testa senza carter | Testa con carter (trasparente) |
+| :---: | :---: |
+| <img src="./hardware/img/cavi_testa.png" alt="Cavi sulla testa senza carter" width="100%" /> | <img src="./hardware/img/cavi_testa_carter.png" alt="Cavi sulla testa con carter" width="100%" /> |
+
+| Canale sul gantry, visto dall'alto | Discesa nell'asola sinistra | Base vista da sotto |
+| :---: | :---: | :---: |
+| <img src="./hardware/img/cavi_canale_x.png" alt="Ansa a U nel canale sopra il gantry" width="100%" /> | <img src="./hardware/img/cavi_discesa.png" alt="Discesa dei cavi nell'asola sinistra" width="100%" /> | <img src="./hardware/img/cavi_sotto_piano.png" alt="Ansa a U sotto il piano, pompa e scheda di controllo" width="100%" /> |
+
+1. **Asse Z.** Tubo e cavo del motore di rotazione salgono e scendono con l'ugello: sopra il raccordo KSH04 fanno un'ansa a "n" (raggio 13 mm), bloccata da un fermacavo sul carter della testa.
+2. **Uscita dalla testa.** I cinque cavi salgono lungo la piastra, la scavalcano affiancati e scendono nel canale dietro la testa.
+3. **Asse X.** In un canale di lamiera sopra il gantry i cavi, impilati su una lamina di acciaio armonico, fanno un'ansa a U orizzontale (raggio 28 mm) con il punto fisso a metà corsa, come nelle stampanti a getto d'inchiostro. Nel canale passa anche il cavo del motore X.
+4. **Discesa.** A sinistra i cavi scendono in fila dietro la vite X, sotto un carter, e passano nell'asola sinistra del piano subito dietro la linguetta della staffa Y.
+5. **Asse Y.** Sotto il piano c'è una seconda ansa a U orizzontale (raggio 25 mm), sempre su lamina, che curva verso il davanti.
+6. **Base.** Dopo il fermacavo i cavi vanno alla scheda di controllo con i driver, il tubo va a elettrovalvola e sensore del vuoto e poi alla pompa, tutto dentro il telaio.
+
+Punti ancora aperti:
+
+- con il carrello Y tutto indietro la fila di cavi esce dalla fine dell'asola sinistra: l'asola va allungata di circa 40 mm verso il retro (da Y = +100 a circa +140), oppure serve un'asola dedicata ai cavi;
+- la bozza è disegnata solo con gli assi in posizione zero e non segue ancora i parametri del modello;
+- i cavi devono essere adatti alla flessione continua (tipo per catene portacavi).
+
+La bozza si ricrea con [`fc_proposta_cavi.py`](./hardware/freecad/fc_proposta_cavi.py), con il modello aperto in FreeCAD.
 
 ## Promemoria acquisti
 
@@ -65,7 +92,10 @@ Quantità e misure prese dal modello 3D.
 | 17 | Pattino a ricircolo di sfere | MGN7H, 17 × 30,8 mm | 1 | Asse Z |
 | 18 | Telecamera USB | Scheda 25 × 25 mm con obiettivo M12 | 2 | Testa (verso il basso) e fronte (dal basso) |
 | 19 | Anello LED | Ø 30–32 mm, foro Ø 16–18 mm | 2 | Intorno ai due obiettivi |
-| 20 | Tubo pneumatico | Ø 4 mm | — | Dal raccordo girevole all'impianto del vuoto |
+| 20 | Tubo pneumatico | PU 4 × 2,5 mm | ≈ 1,5 m | Dal raccordo girevole all'impianto del vuoto |
+| 21 | Cavi per flessione continua | 4 poli (3 motori), 2 poli (anello LED), USB (telecamera) | ≈ 1,5 m ciascuno | Dalla testa alla scheda di controllo |
+| 22 | Lamina di acciaio armonico | 0,2 mm, larga circa 25 mm | 2 | Guida delle anse a U degli assi X e Y |
+| 23 | Pompa del vuoto, elettrovalvola e sensore del vuoto | Pompa a membrana | 1 | Nella base, sotto il piano |
 
 ### Parti da realizzare
 
@@ -82,6 +112,8 @@ Quantità e misure prese dal modello 3D.
 | Braccio della telecamera verso il basso | Alluminio 4 mm | 1 |
 | Vassoio 16 scomparti (2 × 8, 19 × 19 mm) | Stampa 3D, materiale antistatico | 1 |
 | Supporto della telecamera dal basso | Alluminio o stampa 3D | 1 |
+| Canale cavi sopra il gantry, con coperchio | Lamiera di alluminio 1,5 mm | 1 |
+| Carter della testa e carter della discesa cavi | Lamiera sottile o stampa 3D | 2 |
 
 ## Scelte di progetto
 
@@ -135,7 +167,7 @@ Il nozzle raggiunge tutta l'area A5, il vassoio e la telecamera dal basso. La te
 
 ```text
 ├── hardware/
-│   ├── cad/      # Modello 3D: STEP e STL da Fusion, FCStd parametrico FreeCAD
+│   ├── cad/      # Modello 3D: FCStd parametrico FreeCAD, STEP e STL esportati da FreeCAD
 │   ├── freecad/  # Script che rigenerano il modello FreeCAD da zero
 │   └── img/      # Viste del modello
 ├── logo.svg    # Banner del progetto
