@@ -18,13 +18,14 @@ def main(doc_name='A5ive_pick_and_place'):
     d.Label = 'Pick and Place A5'
     L = load('fc_lib')
     S1, S2, S3, S4 = load('fc_stage1'), load('fc_stage2'), load('fc_stage3'), load('fc_stage4')
-    S5, S6 = load('fc_stage5'), load('fc_stage6')
+    S5, S6, S7 = load('fc_stage5'), load('fc_stage6'), load('fc_stage7')
     root = S1.build(L)
     S2.build(L, root)
     S3.build(L, root)
     S4.build(L, S2, S3, root)
     S5.build(L, root)
     S6.build(L, root)
+    S7.build(L, root)
     for o in d.Objects:
         if o.TypeId == 'Sketcher::SketchObject':
             o.Visibility = False

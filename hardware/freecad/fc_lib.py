@@ -212,7 +212,8 @@ def slot2040():
 
 
 # ---------------------------------------------------------------- colori finali
-RULES = [('albero cavo', 'motor'), ('Anello LED', 'led'), ('Obiettivo', 'glass'), ('Vassoio', 'tray'), ('Scheda', 'pcb'),
+RULES = [('Supporto albero', 'blu'), ('Ingranaggio', 'brass'), ('Cuscinetto', 'steel'), ('Albero', 'steel'),
+         ('albero cavo', 'motor'), ('Anello LED', 'led'), ('Obiettivo', 'glass'), ('Vassoio', 'tray'), ('Scheda', 'pcb'),
          ('Ugello', 'steel'), ('Adattatore', 'steel'), ('Giunto rotante', 'brass'), ('Pattino MGN7', 'carr'),
          ('Braccio', 'blu'), ('Zona', 'a5'), ('Rotaia', 'rail'), ('Corpo acciaio', 'carr'), ('Testate', 'green'), ('Tenute', 'red'),
          ('albero', 'steel'), ('Motore', 'motor'), ('Chiocciola', 'brass'), ('Asta', 'steel'), ('Vite', 'steel'),

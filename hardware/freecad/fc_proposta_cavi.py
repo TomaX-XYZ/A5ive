@@ -5,7 +5,11 @@
 # cancella e ricrea il gruppo.
 import FreeCAD as App, Part
 V = App.Vector
-d = App.getDocument('A5ive_pick_and_place')
+d = App.ActiveDocument
+for nome in ('A5ive_0_2', 'A5ive_pick_and_place'):
+    if nome in App.listDocuments():
+        d = App.getDocument(nome)
+        break
 
 GNAME = 'Proposta cavi (bozza)'
 for o in d.getObjectsByLabel(GNAME):
@@ -192,12 +196,12 @@ for i, (lab, col, r) in enumerate(CAVI):
         s = cat(s, rpath([(xI, y_f, zy[i]), (-84, y_f + 8, zy[i]), (-84, 14, zy[i]), (-84, 22, zy[i])], r, 6))
     add(lab, s, col, 30 if col == 'tubo' else 0)
 
-# cavo motore X: fisso nel canale, poi scende con gli altri
+# cavo motore X: il motore e' sotto il piano sul carrello Y (fase 7). Il cavo corre lungo l'asta
+# di collegamento fino a sinistra, passa sopra la pila degli altri cavi e si infila sotto, dal lato esterno.
 i = N
-s = spline([(170, 45, 120), (160, 52, 134), (146, 54, 140), (140, 54, 140)], 1.5)
-s = cat(s, seg((140, 54, 140), (-108, 54, 140), 1.5))
-s = cat(s, rpath([(-108, 54, 140), (-124, 54, 140), (-131, yd[i], 140), (xD, yd[i], 140)] + DISCESA(i), 1.5, 5))
-s = cat(s, seg((xO, Y0, zy[i]), (xO, y_b, zy[i]), 1.5))
+s = rpath([(86, 40, 30), (80, 40, 36), (70, 16, 43), (-125, 16, 43), (-138, 14, 43), (-147, 12, 40),
+           (-147, 10, 22), (-147, 8, zy[i]), (-145, 6, zy[i]), (xO, 3, zy[i])], 1.5, 5)
+s = cat(s, seg((xO, 3, zy[i]), (xO, y_b, zy[i]), 1.5))
 s = cat(s, arc_h(xc, y_b, zy[i], RY, 1.5, 180))
 s = cat(s, seg((xI, y_b, zy[i]), (xI, y_f, zy[i]), 1.5))
 s = cat(s, rpath([(xI, y_f, zy[i]), (-84, y_f + 8, zy[i]), (-84, 14, zy[i]), (-84, 22, zy[i])], 1.5, 6))
